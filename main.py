@@ -2,7 +2,8 @@ def print_menu():
     print("1. Citire lista")
     print("2. Determinare cea mai lungă subsecvență cu toate numerele prime")
     print("3. Determinare cea mai lungă subsecvență cu toate numerele sunt formate din cifre prime")
-    print("4. Iesire")
+    print("4. Determinare cea mai lunga subsecventa cu toate numerele pare")
+    print("5. Iesire")
 
 def citire_lista():
     '''
@@ -70,6 +71,8 @@ def test_get_longest_all_primes():
     assert get_longest_all_primes([]) == []
     assert get_longest_all_primes([8,4,6]) == []
     assert get_longest_all_primes([2, 22, 4, 5, 22, 7, 4, 2, 2]) == [2, 2]
+
+
 def all_digits_prime(x):
     '''
     Returneaza true daca un numar dat este alcatuit doar din cifre prime, false in caz contrar
@@ -116,16 +119,47 @@ def get_longest_prime_digits(l):
     return subsecventa_maxima
 
 def test_get_longest_prime_digits():
-    assert get_longest_prime_digits([11, 22, 33, 55]) == [22, 33, 55]
+    assert get_longest_prime_digits([11, 22, 22, 33, 55, 66, 77]) == [22, 22, 33, 55]
     assert get_longest_prime_digits([11, 12, 13, 15]) == []
-    assert get_longest_prime_digits([87, 88, 7, 55]) == [7, 55]
+    assert get_longest_prime_digits([1, 2, 2, 3, 5, 4, 5]) == [2, 2, 3, 5]
 
+def get_longest_all_even(l):
+    '''
+    Returneaza cea mai lunga subsecventa cu toate numerele pare
+    :param l: lista data de la tastatura
+    :return: subsecventa maxima de numere pare
+    '''
+    subsecventa_maxima = []
+    pozitie_actuala = 0
+    lungime = 0
+    pozitie_in_l = 0
+    lungime_maxima = 0
+    pozitie_maxima = 0
+    for i in l:
+        pozitie_in_l += 1
+        if i%2 == 0:
+            lungime += 1
+            if pozitie_actuala == 0:
+                pozitie_actuala = pozitie_in_l
+        elif lungime > lungime_maxima:
+            lungime_maxima = lungime
+            pozitie_maxima = pozitie_actuala
+            lungime = 0
+            pozitie_actuala = 0
+    for element in range(pozitie_maxima - 1, pozitie_maxima + lungime_maxima - 1):
+        subsecventa_maxima.append(l[element])
+    return subsecventa_maxima
+
+def test_get_longest_all_even() :
+    assert get_longest_all_even([2, 10, 6, 16, 5, 7, 8]) == [2, 10, 6, 16]
+    assert get_longest_all_even([1, 3, 6, 5, 8]) == [6]
+    assert get_longest_all_even([7, 5, 3, 9, 1, 11]) == []
 
 def main():
     test_all_primes()
     test_get_longest_all_primes()
     test_all_digits_prime()
-    #test_get_longest_prime_digits()
+    test_get_longest_prime_digits()
     l = []
     while True:
         print_menu()
@@ -137,6 +171,8 @@ def main():
         elif exercitiu == 3:
             print(get_longest_prime_digits(l))
         elif exercitiu == 4:
+            print(get_longest_all_even(l))
+        elif exercitiu == 5:
             return 0
         else:
             print("Exercitiu gresit. Incercati un alt exercitiu: ")
