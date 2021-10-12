@@ -114,6 +114,11 @@ def get_longest_prime_digits(l):
             pozitie_maxima = pozitie_actuala
             lungime = 0
             pozitie_actuala = 0
+    if lungime > lungime_maxima:
+            lungime_maxima = lungime
+            pozitie_maxima = pozitie_actuala
+            lungime = 0
+            pozitie_actuala = 0
     for element in range(pozitie_maxima-1,pozitie_maxima+lungime_maxima-1):
         subsecventa_maxima.append(l[element])
     return subsecventa_maxima
@@ -137,7 +142,7 @@ def get_longest_all_even(l):
     pozitie_maxima = 0
     for i in l:
         pozitie_in_l += 1
-        if i%2 == 0:
+        if i % 2 == 0:
             lungime += 1
             if pozitie_actuala == 0:
                 pozitie_actuala = pozitie_in_l
@@ -146,6 +151,11 @@ def get_longest_all_even(l):
             pozitie_maxima = pozitie_actuala
             lungime = 0
             pozitie_actuala = 0
+    if lungime > lungime_maxima:
+        lungime_maxima = lungime
+        pozitie_maxima = pozitie_actuala
+        lungime = 0
+        pozitie_actuala = 0
     for element in range(pozitie_maxima - 1, pozitie_maxima + lungime_maxima - 1):
         subsecventa_maxima.append(l[element])
     return subsecventa_maxima
@@ -154,6 +164,7 @@ def test_get_longest_all_even() :
     assert get_longest_all_even([2, 10, 6, 16, 5, 7, 8]) == [2, 10, 6, 16]
     assert get_longest_all_even([1, 3, 6, 5, 8]) == [6]
     assert get_longest_all_even([7, 5, 3, 9, 1, 11]) == []
+    assert get_longest_all_even([4, 4, 4, 5, 6, 6 , 6, 6, 6]) ==[4, 4, 4]
 
 def main():
     test_all_primes()
